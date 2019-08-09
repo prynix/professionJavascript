@@ -5,7 +5,7 @@ var c = {};
 var d = '';
 var e = false;
 var f = 1;
-var g = function (){};
+var g = function () { };
 
 console.log(typeof a);  // object  null-空的对象引用
 console.log(typeof b);  // undefined  未初始化和未声明的变量值为undefined；
@@ -39,7 +39,7 @@ console.log(Boolean(c)); // true
 
 // object
 var a = null;
-var b = {a: 1};
+var b = { a: 1 };
 
 console.log(Boolean(a)); // false
 console.log(Boolean(b)); // true
@@ -123,7 +123,7 @@ console.log(parseInt({})) // NaN
 console.log(parseInt(NaN)) // NaN
 console.log(parseInt(undefined)) // NaN
 
-console.log(parseInt( 1)) // 1
+console.log(parseInt(1)) // 1
 console.log(parseInt(1.11)) // 1 忽略小数点
 console.log(parseInt(070)) // 56
 console.log(parseInt(0xA)) // 10
@@ -182,20 +182,19 @@ console.log(String(undefined))  // 'undefined'
 7.valueOf() 返回对象的字符串、数值或布尔值表示
  */
 
- // toLocalString()、toString()、valueOf() 三者对比 https://www.cnblogs.com/niulina/p/5699031.html
- var obj = {a: 1}
- console.log(obj.constructor) // ƒ Object() { [native code] }
- console.log(obj.hasOwnProperty("a")) // true
+// toLocalString()、toString()、valueOf() 三者对比 https://www.cnblogs.com/niulina/p/5699031.html
+var obj = { a: 1 }
+console.log(obj.constructor) // ƒ Object() { [native code] }
+console.log(obj.hasOwnProperty("a")) // true
 
- var p = {x:1}; // 定义一个原型对象
- var o = Object.create(p); // 使用这个原型创建一个对象
- p.isPrototypeOf(o); // true：o继承p
- Object.prototype.isPrototypeOf(p); // true p继承自Object.prototype
- console.log(obj.propertyIsEnumerable("a")) // true
+var p = { x: 1 }; // 定义一个原型对象
+var o = Object.create(p); // 使用这个原型创建一个对象
+p.isPrototypeOf(o); // true：o继承p
+Object.prototype.isPrototypeOf(p); // true p继承自Object.prototype
+console.log(obj.propertyIsEnumerable("a")) // true
 
- var date = new Date(); 
- console.log(date.toLocaleString()) // 2019/8/1 上午12:13:50
- console.log(obj.toLocaleString()) // [object Object]
- console.log(obj.toString()) // [object Object]
- console.log(obj.valueOf()) // {a: 1}
- 
+var date = new Date();
+console.log(date.toLocaleString()) // 2019/8/1 上午12:13:50
+console.log(obj.toLocaleString()) // [object Object]
+console.log(obj.toString()) // [object Object]
+console.log(obj.valueOf()) // {a: 1}
