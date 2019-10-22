@@ -237,6 +237,7 @@ console.log('121' + (10 + 10)) // '12120'
 4.-Infinity-Infinity=-Infinity
 5.+0-+0=+0 0+-0=-0 -0--0=+0
 6.字符串、布尔、null、undefined  转化结果为NaN，则为NaN
+7.有一个为对象，则通过valueof转化，若无valueof则用toString转化
  */
 console.log(1 - NaN) // NaN
 console.log(Infinity - Infinity) // NaN
@@ -245,7 +246,58 @@ console.log(-Infinity - Infinity) // -Infinity
 console.log(+0 - +0) // 0
 console.log(0 + -0) // -0
 console.log(-0 - -0) // +0
-console.log(5 - null) // 5
+console.log(5 - null) // 5 null转化为0
 console.log(5 - undefined) // NaN
 console.log(5 - true) // 4
 console.log(5 - '1') // 4
+
+/* 关系操作符
+小于(<)、大于(>)、小于等于(<=)大于等于(>=)
+1.如均为字符串，则按字符串对应的编码值比较；
+2.如果一个是数值则另一个转化为数值比较
+3.任何值与NaN、undefined比较为false
+4.有一个为对象，则通过valueof转化，若无valueof则用toString转化
+5.布尔值比较先转化为数值再比较
+*/
+console.log('a' > 'b') // false
+console.log(1 > NaN) // false
+console.log(5 > null) // true
+console.log(false < true) // true
+console.log('23' < '3') // false
+
+/*相等操作符
+ 强制转型
+ 1.布尔值比较先转化为数值再比较
+ 2.如果一个是数值则另一个转化为数值比较
+ 3.有一个为对象，则通过valueof转化，若无valueof则用toString转化
+ 4.null和undefined是相等的, null和undefined比较前不可转化
+ 5.有一个为NaN，则为false，NaN == NaN 为false， NaN != NaN 为true
+ 6.对象指向同一个为true，否则为false
+*/
+console.log(false == true) // false
+console.log(5 > null) // true
+console.log(null == undefined) // true
+console.log(NaN == NaN) // false
+console.log(NaN != NaN) // true
+const a = {a: 1}, b = {a: 1};
+a == b // false
+
+/*全等不全等操作符
+全等:两操作数未经转换后相等
+*/
+console.log('5' === 5) // false
+console.log(null === undefined) // false
+
+/*条件操作符
+*/
+const a = 10 > 1 ? 10 : 1
+
+/*赋值操作符
+*/
+let a = a + 1
+a += 1
+
+/*逗号操作符
+*/
+let a = 1, b = 2;
+let a = (1, 2, 3, 4) // 赋值时有逗号，取最后一个

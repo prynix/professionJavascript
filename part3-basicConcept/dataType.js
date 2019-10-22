@@ -171,7 +171,7 @@ console.log((10).toString(16)) // a 十六进制字符串转化
 console.log(String(null)) // 'null'
 console.log(String(undefined))  // 'undefined'
 
-/* Objext */
+/* Object */
 /* 
 1.constructor
 2.hasOwnProperty(propertyName) 检查给定的属性再当前对象实例中
