@@ -53,4 +53,28 @@ console.log(obj) // {}
 changeName(obj) // {name: "lilei"}
 console.log(obj)  // {name: "hanmeimei"}
 
+// 检测类型
+const num = 1;
+const flag = true;
+const name = "lilei";
+const a = undefined;
+const n = null;
 
+console.log(typeof num); // number
+console.log(typeof flag); // boolean
+console.log(typeof name); // string
+console.log(typeof a); // undefined
+console.log(typeof n); // object
+console.log(typeof /^(\d+(,\s?\d+)*)$/) // 'function' or 'object'  [[call]]
+
+// 引用类型 instanceof
+const person = { name: 'lilei'}
+console.log(person instanceof Object) // true
+console.log(person instanceof Array) // false
+console.log(/^(\d+(,\s?\d+)*)$/ instanceof RegExp) // true
+console.log(1 instanceof Object) // 任何基础类型instanceof 都返回false
+
+function type() {}
+console.log(type instanceof Function) // true
+
+console.log(/^(\d+(,\s?\d+)*)$/ instanceof Function) // false
