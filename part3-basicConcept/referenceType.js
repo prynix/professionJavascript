@@ -95,7 +95,7 @@ let arr2 = arr1.slice(1) // arr2:["black", "yellow", "light", "red"]
 let arr3 = arr1.slice(1, 4) // arr3:["black", "yellow", "light"]
 
 // 如果是负数
-let arr4 = arr1.slice(-1) // 等价于 slice(4) arr4:["red"]
+let arr4 = arr1.slice(-1) // 等价于 slice(4) arr4:["red"]  (长度加负数)
 let arr7= arr1.slice(-2, -1) // 等价于 slice(3, 4) ["light"]
 
 // 如果结束位置小于起始位置
@@ -109,6 +109,8 @@ let removed = arr1.splice(0, 2) // arr1:["yellow", "light", "red"] removed:["blu
 let removed = arr1.splice(2, 0, "green") // arr1:["blue", "black", "green", "yellow", "light", "red"] removed:[]
 
 let removed = arr1.splice(2, 2, "green") // arr1:["blue", "black", "green", "red"] removed:["yellow", "light"]
+
+let add = arr1.splice(-1, 0, "1") // ["blue", "black", "yellow", "light", "red"]
 
 // 位置方法 使用全等（‘===’）
 // indexOf() 从数组的开头（位置0）开始向后查找
@@ -128,6 +130,42 @@ const people1 = [person]
 people.indexOf(person) // -1
 people1.indexOf(person) // 0
 
-// 迭代
+// 迭代-遍历所有选项
 // every()/some()/forEach()/map()/filter()
+let arr = [1, 2, 4]
+let flag = arr.every((item, index, array) => {
+  return item > 2
+})
+// flag: false
+let flag = arr.some((item, index, array) => {
+  return item > 2
+})
+// flag: true
+arr.forEach((item, index, array) => {
+  console.log(item)
+})
+// forEach 无返回值
+let newArr = arr.map((item, index, array) => {
+  return item * 2
+})
+// newArr:[2, 4, 8]
+let newArr = arr.filter((item, index, array) => {
+  return item > 2
+})
+// newArr:[4]
+
+// 归并方法-遍历所有选项
+// reduce():返回值作为下一个值prev
+let arr = [1, 2, 4]
+let sum = arr.reduce((prev, cur, index, array) => {
+  return prev + cur
+})
+// sum: 7
+// reduceRight:从最后一个索引开始
+let sum = arr.reduceRight((prev, cur, index, array) => {
+  return prev + cur
+})
+// sum: 7
+
+// Date
 
