@@ -204,3 +204,31 @@ today.getTimezoneOffset() // 返回本地时间与UTC时间相差的分钟数
 /cat/g.lastIndex // 0 开始搜索下一个匹配项的字符位置，从0开始
 /cat/g.multiline // 是否设置了m标志  m：多行模式 到达这行末位后是否查找下一行
 
+// Function
+// 函数声明提升
+console.log(sum1(1, 2)) // 3
+function sum1(a, b) {
+  return a + b
+}
+
+// 函数表达式
+console.log(sum2(1, 2)) // VM224:1 Uncaught TypeError:
+var sum2 = function (a, b) {
+  return a + b
+}
+
+// 作为值的函数
+function say(statement) {
+  console.log(statement)
+}
+
+function liming(func, params) {
+ func(params)
+}
+
+liming(say, 'hello') // 'hello'
+
+
+
+
+
