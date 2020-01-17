@@ -168,4 +168,39 @@ let sum = arr.reduceRight((prev, cur, index, array) => {
 // sum: 7
 
 // Date
+const today = new Date()
+today.toDateString() // "Thu Jan 16 2020"
+today.toTimeString() // "18:55:11 GMT+0800 (中国标准时间)"
+today.toLocaleDateString() // "2020/1/16"
+today.toLocaleTimeString() // "下午6:55:11"
+today.toUTCString() // "Thu, 16 Jan 2020 10:55:11 GMT"
+today.toLocaleString() // "2020/1/16 下午6:55:11"
+
+// UTC指没有时区偏差情况下的时间值
+today.getTime() // 1579172111511
+today.getFullYear() // 2020
+today.getUTCFullYear() // 2020
+today.setTime(1579172111511) // Thu Jan 16 2020 18:55:11 GMT+0800 (中国标准时间)
+today.setFullYear(2012) // Mon Jan 16 2012 18:55:11 GMT+0800 (中国标准时间)
+today.setUTCFullYear(2013) // Wed Jan 16 2013 18:55:11 GMT+0800 (中国标准时间)
+today.getMonth() // 0 0表示一月
+today.setMonth(2) // Sat Mar 16 2013 18:55:11 GMT+0800 (中国标准时间)
+today.setUTCMonth(2) // Sat Mar 16 2013 18:55:11 GMT+0800 (中国标准时间)
+today.getDate() // 16
+today.setDate(20) // Wed Mar 20 2013 18:55:11 GMT+0800 (中国标准时间)
+today.setUTCDate(20) // Wed Mar 20 2013 18:55:11 GMT+0800 (中国标准时间)
+today.getDay() // 星期三
+today.getHours() // 18
+today.getMinutes() // 55
+today.getSeconds() // 11
+today.getMilliseconds() // 511
+today.getTimezoneOffset() // 返回本地时间与UTC时间相差的分钟数
+
+// RegExp
+/cat/g.test('cataaa') // true
+/cat/g.test('ataaa') // false
+/cat/g.global // 是否设置了g标志 true g: 应用于全局字符串
+/cat/g.ignoreCase // 是否设置了i标志 false i: 不区分大小写
+/cat/g.lastIndex // 0 开始搜索下一个匹配项的字符位置，从0开始
+/cat/g.multiline // 是否设置了m标志  m：多行模式 到达这行末位后是否查找下一行
 
