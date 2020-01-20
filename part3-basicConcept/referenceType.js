@@ -228,6 +228,106 @@ function liming(func, params) {
 
 liming(say, 'hello') // 'hello'
 
+// 从一个函数返回另一个函数
+function compare(property) {
+  return function(obj1, obj2) {
+    const val1 = obj1[property]
+    const val2 = obj2[property]
+
+    if (val1 > val2) {
+      return 1
+    } else if (val1 < val2) {
+      return -1
+    }
+  }
+}
+
+compare('age')({age: 10}, {age: 12})
+
+function factorial(num) {
+  if (num <= 1) {
+    return 1;
+  } else {
+    return num*factorial(num - 1)
+  }
+}
+
+factorial(10) // 3628800
+
+function factorial(num) {
+  if (num <= 1) {
+    return 1;
+  } else {
+    return num*arguments.callee(num - 1) // callee 指向拥有这个arguments对象的函数
+  }
+}
+
+factorial(10) // 3628800
+
+// this -- 全局作用域中调用的是window
+window.color = 'red'
+var o = {color: 'blue'}
+function sayColor () {
+  console.log(this.color)
+}
+
+sayColor() // 'red'
+
+o.sayColor = sayColor;
+o.sayColor() // 'blue'
+
+// 注：函数的名字仅仅是一个包含指针的变量而已
+
+function outer() {
+  inner()
+}
+
+function inner() {
+  console.log(inner.caller)
+  console.log(arguments.callee.caller)
+}
+
+outer()
+
+// 函数属性和方法
+// 每个函数都包含两个属性length和prototype
+// length: 希望接收命名参数的个数
+function sayName(name) {
+  console.log(name)
+}
+
+function sum(num1, num2) {
+  console.log(num1 + num2)
+}
+
+function sayHi() {
+  console.log('hi')
+}
+
+sayName.length // 1
+sum.length // 2
+sayHi.length // 0
+
+// prototype: 保存所有实例方法的真正所在
+// prototype不可枚举，for-in无法发现
+
+// 函数包含的方法：apply()和call()
+// apply()两个参数: 1在其中运行函数的作用域 2参数数组
+function sum (num1, num2) {
+  return num1 + num2
+}
+
+function callSum1 (num1, num2) {
+  return sum.apply(this, [num1, num2])
+}
+
+function callSum2 (num1, num2) {
+  return sum.apply(this, arguments)
+}
+
+callSum1(10, 10) // 20
+callSum2(10, 10) // 20
+
 
 
 
