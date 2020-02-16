@@ -328,7 +328,31 @@ function callSum2 (num1, num2) {
 callSum1(10, 10) // 20
 callSum2(10, 10) // 20
 
+// call 传递的必须逐个列举出来
+function sum (num1, num2) {
+  return num1 + num2;
+}
 
+function callSum(num1, num2) {
+  return sum.call(this, num1, num2)
+}
 
+callSum(10, 10) // 20
 
+// call/apply扩大函数赖以运行的作用域
+// 优点：对象不需要与方法有任何耦合关系
+window.color = "red"
+let o = { color: "blue" }
 
+function sayColor() {
+  console.log(this.color)
+}
+
+sayColor() // red
+sayColor.call(this); // red
+sayColor.call(window); // red
+sayColor.call(o) // blue
+
+// bind()
+let objectSayColor = sayColor.bind(o)
+objectSayColor() // blue
