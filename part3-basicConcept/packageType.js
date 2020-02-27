@@ -149,11 +149,54 @@ stringValue.toLocaleUpperCase() // "HELLO WORLD"
 
 // 字符串匹配
 let stringValue = 'cat, dog, cat'
-let pattern =/.at/
+let pattern =/at/
 
-let matches = stringValue.match(pattern) // [0: "cat", index: 0...]
-matches.index // 0
+let matches = stringValue.match(pattern) // [0: "at", index: 0...]
+matches.index // 1
 matches[0] // 'cat'
 
+let pos = stringValue.search(pattern) // 1  未匹配到返回-1
+result = stringValue.replace("at", "ond") // "cond, dog, cat"
+result = stringValue.replace(/at/g, "ond") // "cond, dog, cond"
+ 
+let stringValue = "cat, bat, sat, fat"
+result = stringValue.replace(/.at/g, "word($&)")
+// "word(cat), word(bat), word(sat), word(fat)"
 
+function htmlEscape (text) {
+  return text.replace(/[<>"&]/g, function(match, pos, originalText){
+    console.log(match) // 匹配项
+    console.log(pos)  // 匹配项在字符串中位置
+    console.log(originalText) // 原始字符串<p class=\"greeting\">Hello World!</p>
+    switch (match) {
+      case "<":
+        return "&lt;";
+      case ">":
+        return "&gt;";
+      case "&":
+        return "&amp;";
+      case "\"":
+        return "&quot;";
+    }
+  })
+}
+
+htmlEscape("<p class=\"greeting\">Hello World!</p>")
+// "&lt;p class=&quot;greeting&quot;ßß&gt;Hello World!&lt;/p&gt;"
+
+let color = "yellow, blue, red, green"
+color.split(",") //  ["yellow", " blue", " red", " green"]
+color.split(",", 2) // ["yellow", " blue"]
+color.split(/[^\,]+/) // ["", ",", ",", ",", ""]
+
+// localeCompare 字符串比较 --受限地域 地域不同结果不同
+let stringValue = "yellow"
+stringValue.localeCompare("brick") // 1 字母表之前
+stringValue.localeCompare("yellow") // 0
+stringValue.localeCompare("zoo") // -1 字母表之前
+
+String.fromCharCode(104, 101, 108, 108, 111) // "hello" charCodeAt执行相反的操作
+
+
+// HTML方法 ---不建议使用
 
