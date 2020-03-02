@@ -16,7 +16,7 @@ let obj = {
 obj["first name"] // 'li'
 obj.age // 10
 
-// Array
+// 
 let arr = new Array(); // []
 let arr = ['1', 1, new Date()]
 arr[99] = 1 // lenght:100
