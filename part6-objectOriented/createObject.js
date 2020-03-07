@@ -105,4 +105,20 @@ let person1 = new Person('Nicholas', 21, 'Software Engineer')
 person1.sayName()
 
 // 原型模式
+// 使用原型对象的好处是可以让所有对象实例共享它所包含的属性和方法
+function Person() {
+  Person.prototype.name = 'Nicholas';
+  Person.prototype.age = 29;
+  Person.prototype.job = 'Software Engineer';
+  Person.prototype.sayName = function() {
+    console.log(this.name)
+  }
+}
 
+let person1 = new Person()
+person1.sayName() // "Nicholas"
+
+let person2 = new Person()
+person2.sayName() // "Nicholas"
+
+console.log(person1.sayName === person2.sayName) // true
