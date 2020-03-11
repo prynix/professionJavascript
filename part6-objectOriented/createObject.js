@@ -123,7 +123,7 @@ person2.sayName() // "Nicholas"
 
 console.log(person1.sayName === person2.sayName) // true
 
-//1.理解原型对象
+//3.1 理解原型对象
 /**
  * 1.创建函数时为该函数创建一个prototype属性，prototype指向该函数的原型对象；
  * 2.protptype会自动获得constructor属性，这个属性是一个指向prototype属性所在函数的指针；
@@ -156,7 +156,7 @@ person1.name = 'Grey'
 console.log(person1.hasOwnProperty("name")) // true
 console.log(person2.hasOwnProperty("name")) // false
 
-// 原型与in操作符
+//3.2 原型与in操作符
 // 单独使用/在for-in循环中使用
 
 // 单独使用中in操作符会在通过对象能够访问给定属性时返回true，无论该属性存在于实例中还是原型中
@@ -189,7 +189,7 @@ Object.keys(person1) // ["age"]
 // Object.getOwnPropertyNames() 无论是否可枚举
 Object.getOwnPropertyNames(Person.prototype) // ["constructor", "name", "age", "job", "sayName"]
 
-//3.更简单的原型方法
+//3.3 更简单的原型方法
 function Person() { }
 Person.prototype = {
   name: 'Nicholas',
@@ -207,4 +207,188 @@ console.log(person1 instanceof Person) // true
 console.log(person1.constructor === Object) // true
 console.log(person1.constructor === Person) // false
 
+Person.prototype = {
+  constructor: Person,
+  name: 'Nicholas',
+  age: 29,
+  job: 'Software Engineer',
+  sayName: function () {
+    console.log(this.name)
+  }
+}
 
+const person1 = new Person()
+console.log(person1.constructor === Person) // true
+
+// 注：重设constructor导致它的[[enumerable]]变为可枚举的，其本身是不可枚举的Object.defineProperty()来定义可避免这个问题
+
+Object.defineProperty(Person.prototype, "constructor", {
+  value: Person,
+  enumerable: false
+})
+
+const person1 = new Person()
+console.log(person1.constructor === Person) // true
+
+//3.4 原型的动态性
+// 在原型中查找值的过程是一次搜索(即使先修改实例再修改原型也可)
+const person1 = new Person()
+Person.prototype.sayHi = function () {
+  console.log('Hi')
+}
+
+person1.sayHi() // "Hi"
+
+// 注：实例与原型间的连接只不过是一个指针。而非副本
+
+function Person () {}
+
+const person1 = new Person()
+
+Person.prototype = {
+  constructor: Person,
+  name: 'Nicholas',
+  age: 29,
+  job: 'Software Engineer',
+  sayName: function () {
+    console.log(this.name)
+  }
+}
+
+person1.sayName() // error
+
+// 注：把原型修改为另一个对象就等于切断了构造函数与最初原型之间的关系
+
+// 实例的指针[[Prototype]]仅指向的是构造函数的原型对象，而非构造函数，即是Person.prototype而非Person
+
+//3.5 原生对象的原型
+console.log(typeof Array.prototype.push) // function
+console.log(typeof String.prototype.split) // function
+
+String.prototype.startsWith = function (text) {
+  return this.indexOf(text) === 0
+}
+
+const msg = "hello world"
+msg.startsWith("hello") // true
+
+// 不建议使用
+
+//3.6 原型对象的问题
+// 属性值为引用类型时，如数组，因原型对象共享它所包含的属性和方法，导致修改某一个实例属性时，会修改另一个实例属性的值，实例一般都是要有属于自己的全部属性的。
+function Person () { }
+
+Person.prototype = {
+  constructor: Person,
+  name: 'Nicholas',
+  age: 29,
+  job: 'Software Engineer',
+  friends: ['A', 'B'],
+  sayName: function () {
+    console.log(this.name)
+  }
+}
+
+const person1 = new Person()
+person1.friends.push('C')
+const person2 = new Person()
+person2.friends // ["A", "B", "C"]
+
+//4 组合使用构造函数模式和原型模式
+// 构造函数模式用于定义实例属性，原型模式用语定义方法和共享的属性
+function Person (name, age, job) {
+  this.name = name
+  this.age = age
+  this.job = job
+  this.friends = ['A', 'B']
+}
+
+Person.prototype = {
+  constructor: Person,
+  sayName: function () {
+    console.log(this.name)
+  }
+}
+
+let person1 = new Person('Nicholas', 21, 'Software Engineer')
+let person2 = new Person('Grey', 25, 'Doctor')
+person1.sayName() // "Nicholas"
+
+console.log(person1.sayName === person2.sayName) // true
+console.log(person1.friends === person2.friends) // false
+person1.friends.push('C')
+console.log(person1.friends) // ["A", "B", "C"]
+console.log(person2.friends) // ["A", "B"]
+
+//5 动态原型模式
+// 通过在构造函数中初始化原型(仅在有必要的情况下)
+function Person (name, age, job) {
+  this.name = name
+  this.age = age
+  this.job = job
+  this.friends = ['A', 'B']
+  if(typeof this.sayName != "function") {
+    Person.prototype.sayName = function () {
+      console.log(this.name)
+    }
+  }
+}
+
+let person1 = new Person('Nicholas', 21, 'Software Engineer')
+person1.sayName() // "Nicholas"
+
+// 注：if仅用判断一个属性或方法即可
+
+//6 寄生构造函数模式
+function Person(name, age, job) {
+  let o = new Object()
+  o.name = name
+  o.age = age
+  o.job = job
+  o.sayName = function () {
+    console.log(this.name)
+  }
+
+  return o
+}
+
+let person1 = new Person('Nicholas', 21, 'Software Engineer')
+
+// 注：构造函数在不返回值的情况下，默认会返回新对象实例。而通过在构造函数的末尾添加一个return，可以重写调用构造函数时返回的值。
+
+// 例子：创建一个具有额外方法的特殊数组（不直接修改数组）
+function SpecialArray () {
+  let values = new Array()
+  values.push.apply(values, arguments)
+
+  values.toPipedString = function () {
+    return this.join('|')
+  }
+
+  return values
+}
+
+let colors = new SpecialArray('red', 'green', 'blue')
+colors.toPipedString() // "red|green|blue"
+
+// 注：重在理解思想 
+// 注：返回的对象与构造函数或者构造函数的原型对象之间没有关系
+
+//7 稳妥构造函数
+// 稳妥对象：没有公共属性，其方法也不引用this
+// 安全环境下使用
+// 与寄生构造函数的不同：1 属性中不使用this 2 不使用new操作符
+function Person(name, age, job) {
+  let o = new Object()
+  o.name = name
+  o.age = age
+  o.job = job
+  o.sayName = function () {
+    console.log(name)
+  }
+
+  return o
+}
+
+let person1 = Person('Nicholas', 21, 'Software Engineer')
+person1.sayName() // "Nicholas"
