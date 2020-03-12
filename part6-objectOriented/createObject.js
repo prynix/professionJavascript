@@ -50,6 +50,29 @@ console.log(person1.constructor === Person) // true
 console.log(person2.constructor === Person) // true
 console.log(person1.constructor === person2.constructor) // true
 
+function Person(name, age, job) {
+  this.name = name
+  this.age = age
+  this.job = job
+  this.sayName = function () {
+    console.log(this.name)
+  }
+}
+
+function getNew() {
+  let obj = new Object()
+
+  Person.call(obj)
+
+  // 实例指针指向构造函数原型
+  // 注：无标准方式访问[[Prototype]]指针，firfox/safari/chrome提供了__proto__
+  obj.__proto__ = Person.prototype
+
+  return obj
+}
+
+getNew() // new的过程简单实现
+
 // 创建自定义构造函数以为这将来可以将它的实例标识为一种特定类型
 
 // 检测对象类型instanceof

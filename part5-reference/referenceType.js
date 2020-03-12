@@ -353,6 +353,15 @@ sayColor.call(this); // red
 sayColor.call(window); // red
 sayColor.call(o) // blue
 
+sayColor.call(null); // red
+sayColor.call(undefined); // red
+
+// 请注意，this可能不是该方法看到的实际值：如果这个函数处于非严格模式下，则指定为 null 或 undefined 时会自动替换为指向全局对象，原始值会被包装。
+
+"use strict"
+sayColor.call(null); // error
+sayColor.call(undefined); // error
+
 // bind()
 let objectSayColor = sayColor.bind(o)
 objectSayColor() // blue
