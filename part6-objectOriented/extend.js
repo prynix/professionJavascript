@@ -177,7 +177,7 @@ newPerson.sayHi() // 'hi'
 // 借助构造函数来继承属性，通过原型链混成形式来继承方法
 
 function inheritPrototype (subType, superType) {
-  const prototype = Object.create(superType)
+  const prototype = Object.create(superType.prototype)
   prototype.constructor = subType
   subType.prototype = prototype
 }
@@ -193,15 +193,16 @@ SubType.prototype.getType = function () {
 
 function SubTType () {
   this.name = ''
+  SubType.call(this)
 }
+
+inheritPrototype(SubTType, SubType)
 
 SubTType.prototype.setName = function (name) {
   this.name = name
 }
 
-inheritPrototype(SubTType, SubType)
-
 const type = new SubTType()
 type.setName('2') // "2"
 type.color.push('yellow') // color: ["red", "blue", "yellow"]
-type.getType()
+type.getType() // 'sub'
