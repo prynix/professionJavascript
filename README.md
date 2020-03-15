@@ -8,6 +8,7 @@
   <li>Part4 Variate&Scope&Storage</li>
   <li>Part5 Reference</li>
   <li>Part6 ObjectOriented</li>
-  <li>part7 Function</li>
+  <li>Part7 Function</li>
+  <li>Part8 BOM</li>
 </ul>
 
