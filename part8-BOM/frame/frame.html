@@ -1,0 +1,17 @@
+<html>
+  <head>
+    <title>frameset example</title>
+  </head>
+  <script>
+    console.log(parent === top) // true
+
+    // 注：代码位于topFrame中，parent指向top
+  </script>
+  <frameset rows="160,*">
+    <frame src="frame.htm" name="topFrame"/>
+    <frameset cols="50%, 50%">
+      <frame src="anotherframe.htm" name="leftFrame"/>
+      <frame src="yetanotherframe.htm" name="rightFrame"/>
+    </frameset>
+  </frameset>
+</html>
