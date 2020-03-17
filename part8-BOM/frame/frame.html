@@ -6,6 +6,12 @@
     console.log(parent === top) // true
 
     // 注：代码位于topFrame中，parent指向top
+
+    window.open('https://www.baidu.com', 'topFrame')
+
+    window.open('https://www.baidu.com', 'leftFrame', 'width=100,height=100,top=10,left=10,resizeable=yes', false)
+
+    // 新开的百度页面的 window.name 为topFrame
   </script>
   <frameset rows="160,*">
     <frame src="frame.htm" name="topFrame"/>

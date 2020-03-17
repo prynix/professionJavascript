@@ -47,3 +47,145 @@ var newValue = window.oldvalue // undefined
 
 let leftPos = window.screenLeft === 'number' ? window.screenLeft : window.screenX
 let topPos = window.screenTop === 'number' ? window.screenTop : window.screenY 
+
+// 不适用于框架只适用于window对象
+window.moveTo(0, 0) // ?? 新位置
+window.moveBy(20, 20) // ?? 水平/垂直距离
+
+//2.4 窗口大小
+var pageWidth = window.innerWidth // 可见视口
+var pageHeight = window.innerHeight
+
+if (typeof pageWidth != "number") {
+  if (document.compatMode == "CSS1Compat") {
+    pageWidth = document.documentElement.clientWidth // 布局视口
+    pageHeight = document.documentElement.clientHeight
+  } else {
+    pageWidth = document.body.clientWidth
+    pageHeight = document.body.clientHeight
+  }
+}
+
+pageHeight // 488
+pageWidth // 1920
+
+// 不适用于框架只适用于window对象
+window.resizeTo(100, 100) // ??
+window.resizeBy(100, 100) // ??
+
+//2.5 导航和打开窗口
+
+// 弹出窗口
+// window.open() 
+/**
+ * 四个参数：
+ * 要加载的URL
+ * 窗口目标 （可以是iframe名称 也可为_self、_parent、_top、_blank）
+ * 一个特性字符串
+ * 一个表示新页面是否取代浏览器历史记录中当前加载页面的布尔值
+ */
+window.open('https://www.baidu.com', 'topFrame')
+
+//等同于
+// <a href="https://www.baidu.com" target="topFrame"></a>
+
+var leftwin = window.open('https://www.baidu.com', '_blank', 'width=100,height=100,top=10,left=10,resizeable=yes')
+
+leftwin.resizeTo(100, 100) // ??
+
+leftwin.moveTo(100, 100) // ??
+
+leftwin.close() // 仅适用于通过window.open打开的弹出窗口
+
+leftwin.closed // true
+
+leftwin.opener = null // 告诉浏览器新创建的标签页不需要于打开它的标签页通信，可以在独立进程中运行，一旦切断没办法恢复
+
+// 安全限制 -- 弹出窗口
+
+// 弹出窗口屏蔽程序
+
+var blocked = false
+try {
+  var leftwin = window.open('https://www.baidu.com', '_blank', 'width=100,height=100,top=10,left=10,resizeable=yes')
+
+  if (leftwin == null) { // 浏览器内置屏蔽
+    blocked = true
+  }
+
+} catch {
+  blocked = true
+}
+
+//2.6 间歇调用和超时调用
+
+setTimeout("alert('hello')", 1000) // 避免使用
+
+setTimeout(function() {
+  alert('hello')
+}, 1000)
+
+var timeoutId = setTimeout(function() {
+  alert('hello')
+}, 1000)
+
+clearTimeout(timeoutId)
+
+setInterval("alert('hello')", 1000) // 避免使用
+
+setInterval(function() {
+  alert('hello')
+}, 1000)
+
+var num = 0
+var max = 2
+
+var intervalId = setInterval(function() {
+  incrementNum()
+  alert('hello')
+}, 1000)
+
+function incrementNum () {
+  num++
+  if (num === max) {
+    clearInterval(intervalId)
+    console.log('finish')
+
+    intervalId = null
+  }
+}
+
+var num = 0
+var max = 4
+
+function incrementNum () {
+  num++
+  if (num <= max) {
+    alert('hello')
+    setTimeout(incrementNum, 1000) // 通过setTimeout模拟setInterval
+  } else {
+    console.log('finish')
+  }
+}
+
+incrementNum()
+
+setInterval // 后一个调用可能会在前一个调用结束前启动，需避免使用
+
+//2.7 系统对话框
+// alert/confirm/promote
+
+alert(1)
+
+confirm("ok?")
+
+if (confirm("ok?")) {
+  console.log('yes')
+} else {
+  console.log('no')
+}
+
+var result = prompt('name', 'lilei')
+if (result !== null) {
+  console.log(result)
+}
