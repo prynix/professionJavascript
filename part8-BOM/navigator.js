@@ -18,7 +18,7 @@ navigator.buildID
 navigator.cookieEnabled
 // true
 
-navigator.cpuClass
+// navigator.cpuClass
 // undefined
 
 navigator.javaEnabled
