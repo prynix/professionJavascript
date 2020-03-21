@@ -13,3 +13,15 @@ var hasDontEnumQuirk = function() {
   return true
 }()
 
+// 会枚举被隐藏的属性
+var hasEnumShadowsQuirk = function() {
+  var o = { toString : function() {} }
+  var count = 0
+  for (var prop in o) {
+    if (prop == "toString") {
+      count++
+    }
+  }
+  return (count>1)
+}()
+
