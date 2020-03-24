@@ -25,3 +25,4 @@ var hasEnumShadowsQuirk = function() {
   return (count>1)
 }()
 
+// 对程序有直接影响的“怪癖”，最好在脚本一开始就执行此类检测
