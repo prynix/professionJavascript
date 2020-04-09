@@ -12,6 +12,8 @@ class _Promise {
     }
 
     this.status = PENDING
+    this.value = null
+    this.reason = null
 
     this._rejectQueues = []
     this._resolveQueues = []
@@ -24,20 +26,28 @@ class _Promise {
   }
 
   _reject (val) {
-    this.status = REJECTED
     setTimeout(() => {
-      this._rejectQueues.map(item => {
-        item.bind(this)(val)
-      })
+      if (this.status === PENDING) {
+        this.status = REJECTED
+        this.reason = val
+        this._rejectQueues.map(item => {
+          this.reason = item.bind(this)(this.reason)
+          console.log('reason:'+ this.reason)
+        })
+      }
     })
   }
 
   _resolve (val) {
-    this.status = FULFILLED
     setTimeout(() => {
-      this._resolveQueues.map(item => {
-        item.bind(this)(val)
-      })
+      if (this.status === PENDING) {
+        this.status = FULFILLED
+        this.value = val
+        this._resolveQueues.map(item => {
+          this.value = item.bind(this)(this.value)
+          console.log('val:'+ this.value)
+        })
+      }
     })
   }
 
@@ -55,9 +65,44 @@ class _Promise {
 }
 
 new _Promise((reject, resolve) => {
-  resolve(1)
+  setTimeout(() => {
+    resolve(1)
+  })
 }).then((res)=>{
+  console.log('res:' + res)
   console.log(res + 1) // 2
+  return res + 1
 }).then((res)=>{
-  console.log(res + 2) // 3
+  console.log('res:' + res)
+  console.log(res + 1) // 3
+})
+
+let funcA = function () {
+  console.log('A')
+}
+
+let funcB = function () {
+  console.log('B')
+}
+
+function test (func) {
+  func(funcA, funcB)
+}
+
+test((funcC, funcD) => { // 匿名函数声明
+  funcC()
+  funcD()
+})
+
+
+test(() => { // 此处声明无传参 参数中的各种调用将毫无意义
+
+})
+
+function testtest (func) {
+  func(1, 2)
+}
+
+testtest((a, b) => { // 匿名函数声明
+  console.log(a + b)
 })
