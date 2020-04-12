@@ -7,24 +7,26 @@
 </head>
 <body>
   <p>Image to use:</p>
-  <img id="scream" width="220" height="277" src="img_the_scream.jpg" alt="The Scream">
+  <img id="scream" width="220" height="277" src="v8.jpg" alt="The Scream"/>
   <!-- 图片内容过多时canvas显示出来为空白 具体限制是什么样的？？？ -->
-
   <p>Canvas:</p>
   <canvas id="myCanvas" width="240" height="297" style="border:1px solid #d3d3d3;">
   Your browser does not support the HTML5 canvas tag.
   </canvas>
-
   <script>
-  window.onload = function() {
-    var c = document.getElementById("myCanvas");
-    if (drawing.getContext) {
-      var ctx = c.getContext("2d");
-      var img = document.getElementById("scream");
-      ctx.drawImage(img, 10, 10);
-    }
-  }
-  </script>
+    var image = document.getElementById("scream");
 
+    image.onload = function () {
+      console.log('图片加载完成')
+      console.log(this)
+      // onload在图片很大时依旧会在图片还未渲染完开始绘图 ？？？
+      setTimeout(function() {
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+        ctx.drawImage(image, 10, 10);
+        console.log('图片绘制完毕')
+      }, 2000)
+    }
+  </script>
 </body>
 </html>
