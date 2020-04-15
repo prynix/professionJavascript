@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <canvas id="drawing" width="200" height="200">A drawing of something</canvas>
+  <script>
+    // globalAlpha & globalCompositeOperation
+    var drawing = document.getElementById("drawing")
+    if (drawing.getContext) {
+      // globalAlpha
+      
+      var context = drawing.getContext('2d')
+      context.fillStyle = "#ff0000"
+      context.fillRect(10, 10, 50, 50)
+
+      context.globalAlpha = 0.5
+
+      context.fillStyle = "rgba(0,0,255,1)"
+      context.fillRect(10, 30, 50, 50)
+
+      context.globalAlpha = 0
+
+      // globalCompositeOperation
+
+      context.fillStyle = "#ff0000"
+      context.fillRect(20, 20, 50, 50)
+
+      context.globalCompositeOperation = 'destination-over'
+
+      context.fillStyle = "rgba(0,0,255,1)"
+      context.fillRect(40, 40, 50, 50)
+
+      context.globalAlpha = 0
+    }
+  </script>
+</body>
+</html>
