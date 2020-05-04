@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    log('it is error')
+    log('it is error')
+
+    function log(message) {
+      var console = document.getElementById('debuginfo')
+      if (console === null) {
+        console = document.createElement('div')
+        console.id = 'debuginfo',
+        console.style.background = '#dedede'
+        console.style.border = '1px solid silver'
+        console.style.padding = '5px'
+        console.style.width = '400px'
+        console.style.position = 'absolute'
+        console.style.right = '0px'
+        console.style.top = '0px'
+        document.body.appendChild(console)
+      }
+      console.innerHTML += "<p>" + message + '</p>'
+    }
+
+  </script>
+</body>
+</html>
